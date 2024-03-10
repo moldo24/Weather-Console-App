@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonUtils {
+    //prints the hashmap
     public static void printWeatherData(StringBuilder result) {
         Map<String, Object> respMap = jsonToMap(result.toString());
         Map<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
@@ -23,6 +24,7 @@ public class JsonUtils {
         System.out.println("Wind Speeds: " + windMap.get("speed"));
         System.out.println("Wind Angle: " + windMap.get("deg"));
     }
+    //method that uses Google's gson library to parse the json String
     public static Map<String, Object> jsonToMap(String json) {
         return new Gson().fromJson(json, new TypeToken<HashMap<String, Object>>() {}.getType());
     }

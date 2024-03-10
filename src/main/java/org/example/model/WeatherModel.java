@@ -2,7 +2,7 @@ package org.example.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+//this model is provided by http://openweathermap.com
 public class WeatherModel {
 
     @SerializedName("cod")

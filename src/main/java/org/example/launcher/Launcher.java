@@ -1,39 +1,51 @@
 package org.example.launcher;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.example.service.HttpUtils;
 import org.example.service.JsonUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-
+//51e34a80d8d4ea71639e07b36cff7c78 - remove this before posting
 public class Launcher {
 
     public static void main(String[] args) {
-        String API_KEY = "51e34a80d8d4ea71639e07b36cff7c78";
+
         Scanner scanner = new Scanner(System.in);
+        int x = 1;
+        System.out.println("(type 'exit' to quit)");
 
-        System.out.print("What city are you from?\n");
-        String city = scanner.nextLine();
+        // Ask user for API key
+        System.out.print("Please enter your API key: ");
+        String API_KEY = scanner.nextLine();
 
-        System.out.print("What are the initials of your Country?\n");
-        String countryInitials = scanner.nextLine();
+        boolean exit = false;
+        while (!exit) {
+            System.out.print(x + ". Name of the city ?\n");
+            String city = scanner.nextLine();
 
-        String location = city + ", " + countryInitials.toUpperCase();
-        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + API_KEY + "&units=metric";
-        try {
-            StringBuilder response = HttpUtils.sendHttpGetRequest(urlString);
-            JsonUtils.printWeatherData(response);
+            if (city.equalsIgnoreCase("exit")) {
+                exit = true;
+                continue; // Skip to the next iteration of the loop
+            }
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.print(x + ". Initials of the Country?\n");
+            String countryInitials = scanner.nextLine();
+
+            String location = city + ", " + countryInitials.toUpperCase();
+            //Make the url request
+            String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + API_KEY + "&units=metric";
+            try {
+                //Send HTTP GET request
+                StringBuilder response = HttpUtils.sendHttpGetRequest(urlString);
+                //print weather data
+                JsonUtils.printWeatherData(response);
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
+            x++; // Loop Numbering
         }
+        scanner.close(); // Close scanner when done
     }
 }
